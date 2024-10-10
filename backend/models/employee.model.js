@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 const employeeSchema = new mongoose.Schema({
-  f_Id: { type: Number, required: true },
+  f_Id: { type: String, required: true },
   f_Name: { type: String, required: true },
   f_Email: { type: String, required: true },
   f_Mobile: { type: String, required: true },
@@ -26,4 +26,4 @@ const employeeSchema = new mongoose.Schema({
 });
 
 const Employee = mongoose.model('Employee', employeeSchema);
-module.exports = Employee;
+export default Employee;
