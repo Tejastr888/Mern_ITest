@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import CreateEmployee from "./pages/CreateEmployee";
 import EditEmployee from "./pages/EditEmployee";
 import EmployeeCreated from "./pages/EmployeeCreated";
+import EmployeeTable from "./pages/EmployeeTable ";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useAuthStore();
@@ -38,6 +39,14 @@ function App() {
             element={
               <ProtectedRoute>
                 <CreateEmployee />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/EmployeeTable"
+            element={
+              <ProtectedRoute>
+                <EmployeeTable />
               </ProtectedRoute>
             }
           />

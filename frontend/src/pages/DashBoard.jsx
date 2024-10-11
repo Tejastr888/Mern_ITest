@@ -9,14 +9,15 @@ const DashBoard = () => {
 
   const handleLogout = () => {
     logout();
+    navigate("/login");
   };
 
   const handleCreateEmployee = () => {
-    navigate("/create-employee"); // Assuming you have this route set up
+    navigate("/create-employee");
   };
 
   const handleEditEmployee = () => {
-    navigate("/edit-employee"); // Assuming you have this route set up
+    navigate("/edit-employee");
   };
 
   return (

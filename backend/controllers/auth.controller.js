@@ -89,13 +89,11 @@ export const createEmployee = async (req, res) => {
       throw new Error("All fields are required");
     }
 
-    // Check if user already exists
     const userAlreadyExist = await Employee.findOne({ email });
     if (userAlreadyExist) {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    // Automatically generate f_Id (incremented value)
     const f_Id = crypto.createHash("sha256").update(email).digest("hex");
 
     let imagePath = "something";
@@ -115,7 +113,7 @@ export const createEmployee = async (req, res) => {
       f_Image: imagePath,
     });
 
-    // Save the employee to the database
+
     await employee.save();
     res
       .status(201)
@@ -138,5 +136,48 @@ export const checkauth = async (req, res) => {
   } catch (error) {
     console.log("error in checkauth", error);
     res.status(400).json({ success: false, message: error.message });
+  }
+};
+
+
+export const getPaginatedEmployees = async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+
+
+    const nameFilter = req.query.name || ""; 
+    const sortField = req.query.sort || "f_Name"; 
+    const sortOrder = req.query.order === "desc" ? -1 : 1; 
+
+ 
+    const skip = (page - 1) * limit;
+
+
+    const filterQuery = nameFilter
+      ? { f_Name: { $regex: nameFilter, $options: "i" } }
+      : {};
+
+
+    const employees = await Employee.find(filterQuery)
+      .sort({ [sortField]: sortOrder })
+      .skip(skip)
+      .limit(limit)
+      .exec();
+
+    
+    const totalEmployees = await Employee.countDocuments(filterQuery);
+    const totalPages = Math.ceil(totalEmployees / limit);
+
+
+    res.status(200).json({
+      employees,
+      totalPages,
+      currentPage: page,
+      totalEmployees,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error while fetching employees" });
   }
 };

@@ -1,15 +1,14 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Or useNavigate if using react-router v6+
+import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../store/authStore";
 
 const EmployeeCreated = () => {
   const { employee } = useAuthStore();
   const navigate = useNavigate();
 
-  // Navigate to different pages
   const goToHome = () => navigate("/");
   const createAnotherEmployee = () => navigate("/create-employee");
-  const viewEmployees = () => navigate("/employees");
+  const viewEmployees = () => navigate("/EmployeeTable");
 
   return (
     <div className="max-w-md w-full mx-auto mt-10 p-8 bg-gray-900 bg-opacity-80 backdrop-filter backdrop-blur-lg rounded-xl shadow-2xl border border-gray-800">
