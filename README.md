@@ -16,12 +16,13 @@ CLIENT_URL= http://localhost:5173
 ### Run this app locally
 
 ```shell
-npm run build
+npm run dev
 ```
 
 ### Start the app
 
 ```shell
-npm run start
+cd frontend
+npm run dev
 ```
 
